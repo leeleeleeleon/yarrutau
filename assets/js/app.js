@@ -158,7 +158,7 @@
           <div class="vb-name"><p class="vb-title">준비 중</p><p class="vb-sub">새 친구가 곧 올라와요</p></div>
           <div class="vb-chips"><span class="chip is-empty">준비 중</span></div>
         </div>`;
-      const notes = [c.subname, c.versions?.map((v) => v.label).join(' / '), c.sample ? '샘플 듣기 가능' : '']
+      const notes = [c.subname, c.versions?.map((v) => v.label).join(' / ')]
         .filter(Boolean).join(' · ');
       const downloads = allDownloads(c);
       return `
@@ -290,6 +290,17 @@
           <p class="spec-note">추천 음역은 원음 음높이를 측정해 잡은 참고값이에요. 곡에 따라 더 넓게 써도 괜찮아요.</p>`;
   }
 
+  // 사용 규약: 음원 주인이 정한 내용. 없으면 문의 안내
+  const TERM = { ok: '가능', no: '불가', ask: '문의', part: '조건부' };
+  function termsTable(c) {
+    if (!c.terms?.length) {
+      return `<p class="terms-empty">사용 규약을 정리하고 있어요. 이용하기 전에 ${contact.email ? `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>로 ` : ''}문의해 주세요.</p>`;
+    }
+    return `<ul class="terms">${c.terms.map(([item, state, text]) => `
+      <li><span class="terms-item">${esc(item)}</span>${TERM[state] ? `<span class="terms-state is-${esc(state)}">${TERM[state]}</span>` : ''}${text && text !== TERM[state] ? `<span class="terms-text">${esc(text)}</span>` : ''}</li>`).join('')}
+    </ul>`;
+  }
+
   function profile(c) {
     const art = c.image
       ? `<img class="art" src="${esc(c.image)}" alt="${esc(c.name)} ${esc(c.versionLabel || '')} 스탠딩">`
@@ -362,6 +373,9 @@
 
           ${heading('프로필')}
           ${profileTable(c)}
+
+          ${heading('사용 규약')}
+          ${termsTable(c)}
 
           ${downloads ? `${heading('음원 다운로드')}
           <div class="downloads">${downloads}</div>` : ''}

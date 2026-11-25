@@ -509,7 +509,7 @@ async function loadVoice(c) {
 /* ---------------- 화면 ---------------- */
 // 버전이 있는 캐릭터(예: 키 기본/위스퍼)는 버전마다 따로 고를 수 있게 펼친다
 const characters = window.SITE.characters.flatMap(c => !c.versions ? [c] : c.versions.map((v, i) => ({
-  ...c, ...v, id: i ? `${c.id}-${v.id}` : c.id, name: i ? `${c.name} ${v.label}` : c.name,
+  ...c, ...v, id: i ? `${c.id}-${v.id}` : c.id, name: i ? (v.talkName || `${c.name} ${v.label}`) : c.name,
   thumb: v.thumb || (v.image && i ? v.image : c.thumb), voice: v.voice || (i ? '' : c.voice),
 })).filter((v, i) => i === 0 || v.voice));
 const esc = v => String(v).replace(/[&<>"']/g, ch => `&#${ch.charCodeAt(0)};`);
@@ -565,7 +565,7 @@ root.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v18l15-9z"/></svg>말하기
     </button>
     <button type="button" class="talk-sub" id="talk-stop">멈추기</button>
-    <button type="button" class="talk-sub" id="talk-save" hidden>wav 저장</button>
+    <button type="button" class="talk-sub" id="talk-save">wav 저장</button>
   </div>
   <p class="talk-status" id="talk-status" role="status" aria-live="polite"></p>
   <audio id="talk-audio" hidden></audio>
@@ -655,14 +655,23 @@ $('talk-go').addEventListener('click', async () => {
 $('talk-stop').addEventListener('click', () => { audio.pause(); audio.currentTime = 0; });
 
 $('talk-save').addEventListener('click', async () => {
-  if (!lastPcm || !downloads) return;
-  try { await downloads.save({ filename: `${VB.name}_말하기.wav`, data: encodeWav(lastPcm) }); setStatus('저장했어요.'); }
+  if (!lastPcm) { setStatus('먼저 말하기를 눌러 소리를 만들어 주세요.', true); return; }
+  const filename = `${VB.name}_말하기.wav`;
+  if (!downloads) {
+    // 일반 웹페이지: 브라우저 다운로드로 바로 저장
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(encodeWav(lastPcm)); a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    setStatus('저장했어요.'); return;
+  }
+  try { await downloads.save({ filename, data: encodeWav(lastPcm) }); setStatus('저장했어요.'); }
   catch (e) { setStatus(e?.code === 'declined' ? '저장을 취소했어요.' : '이 화면에서는 저장할 수 없어요.', e?.code !== 'declined'); }
 });
 (async () => {
   for (let i = 0; i < 20 && !(window.claude && window.claude.use); i++) await new Promise(r => setTimeout(r, 150));
   try { downloads = window.claude?.use ? await window.claude.use('downloads') : null; } catch (e) { downloads = null; }
-  $('talk-save').hidden = !downloads;
+  $('talk-save').hidden = false;
 })();
 
 syncKnobs();

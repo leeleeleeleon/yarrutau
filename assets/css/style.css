@@ -278,6 +278,17 @@ body:not([data-page='home']) .tab:not([aria-current]):not(:hover):not(:focus-vis
 .spec div:nth-child(odd) { padding-right: 20px; }
 .spec dt { font: 12px/1.4 var(--mono); letter-spacing: .04em; opacity: .7; }
 .spec dd { margin: 4px 0 0; font-size: 18px; font-weight: 700; }
+.terms { list-style: none; margin: 0; padding: 0; max-width: 40em; border-top: 2px solid var(--ink); }
+.terms li { display: grid; grid-template-columns: 7.5em 4.5em minmax(0, 1fr); align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--ink); }
+.terms-item { font-weight: 700; }
+.terms-state { justify-self: start; padding: 2px 8px; font: 700 13px/1.5 var(--text); border: 2px solid var(--ink); }
+.terms-state.is-ok { background: var(--ink); color: var(--bg); }
+.terms-state.is-no { text-decoration: line-through; text-decoration-thickness: 2px; }
+.terms-state.is-ask, .terms-state.is-part { border-style: dashed; }
+.terms-text { font-size: 14px; }
+.terms-item + .terms-text { grid-column: 2 / -1; font-size: 16px; font-weight: 700; }
+.terms-empty { max-width: 40em; padding: 14px 16px; border: 2px dashed var(--ink); font-size: 14px; }
+.terms-empty a { color: inherit; font-weight: 700; }
 .spec-note { margin-top: 10px; font-size: 13px; opacity: .75; }
 .info-logo { height: clamp(80px, 13vh, 128px); width: auto; max-width: 100%; object-fit: contain; object-position: left; }
 .info-logo.on-plate { padding: 14px 20px; object-position: center; }
@@ -423,7 +434,8 @@ body:not([data-page='home']) .talk-bar { border-top: 0; }
 .who-name { padding: 0 12px; font: 400 24px/1.2 var(--display); }
 .who-btn small { padding: 0 12px; font-size: 12px; color: #595959; }
 .who-btn[aria-checked='true'] { box-shadow: 6px 6px 0 #000; transform: translate(-3px, -3px); }
-.who-btn[aria-checked='true'] .who-name::before { content: '● '; color: var(--c); -webkit-text-stroke: 1px #000; }
+.who-btn { position: relative; }
+.who-btn[aria-checked='true']::after { content: '선택'; position: absolute; top: 8px; left: 8px; padding: 1px 8px; background: #000; color: #fff; font: 700 12px/1.6 var(--text); }
 .who-btn:disabled { cursor: not-allowed; }
 .who-btn:disabled .who-face { filter: grayscale(.5); opacity: .7; }
 .talk-box { border: 3px solid #000; }
@@ -495,6 +507,10 @@ body:not([data-page='home']) .talk-bar { border-top: 0; }
 }
 
 @media (max-width: 800px) {
+  .lanes span { font-size: 0; padding-top: 0; }
+  .terms li { grid-template-columns: 6.5em minmax(0, 1fr); row-gap: 2px; }
+  .terms-text { grid-column: 1 / -1; }
+  .terms-item + .terms-text { grid-column: 2 / -1; }
   .news-list li { grid-template-columns: 1fr; gap: 4px; }
   .masthead, body[data-page='home'] .masthead { height: 150px; }
   .brand img, body[data-page='home'] .brand img { height: 88px; }
