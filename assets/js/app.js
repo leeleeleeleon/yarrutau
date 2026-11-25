@@ -298,7 +298,7 @@
       <main class="profile">
         <div class="standing">
           <div class="standing-art">
-            <p class="bg-word" lang="${/[぀-ヿ一-鿿]/.test(bgWord) ? 'ja' : 'ko'}" aria-hidden="true">${esc(bgWord)}</p>
+            <p class="bg-word" lang="${/[぀-ヿ一-鿿]/.test(bgWord) ? 'ja' : 'ko'}" style="--n:${[...bgWord].length}" aria-hidden="true">${esc(bgWord)}</p>
             ${art}
           </div>
           <p class="hashtag">#${esc(c.hashtag)}</p>

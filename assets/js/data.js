@@ -61,7 +61,7 @@ window.SITE = {
           logo: 'assets/img/logo-ryookoro-ki.webp', // 원본 색
           sample: 'assets/audio/ryookoro-ki-whisper.mp3',
           voice: 'assets/voices/ryookoro-ki-whisper/',
-          downloads: [], // 비어 있으면 다운로드 칸이 안 나옵니다
+          downloads: [{ type: 'CV', url: 'https://bowlroll.net/file/365289' }],
         },
       ],
     },
@@ -159,9 +159,9 @@ window.SITE = {
       en: 'Serenity',
       subname: 'Serenity',
       hashtag: 'UTAU_Serenity',
-      cv: '나즈',
+      cv: 'Naz',
       illust: '',
-      color: '#ffd1e3', ink: '#000000', accent: '#000000', onAccent: '#ffd1e3',
+      color: '#f6c6b9', ink: '#000000', accent: '#000000', onAccent: '#f6c6b9', // Serene Pink
       image: 'assets/img/sereni.webp',
       thumb: 'assets/img/sereni-small.webp',
       focus: '50%',
