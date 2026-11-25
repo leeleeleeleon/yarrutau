@@ -161,7 +161,7 @@ window.SITE = {
       hashtag: 'UTAU_Serenity',
       cv: 'Naz',
       illust: '',
-      color: '#f6c6b9', ink: '#000000', accent: '#000000', onAccent: '#f6c6b9', // Serene Pink
+      color: '#f3dae1', ink: '#000000', accent: '#000000', onAccent: '#f3dae1', // Pale Pink Serenity
       image: 'assets/img/sereni.webp',
       thumb: 'assets/img/sereni-small.webp',
       focus: '50%',
