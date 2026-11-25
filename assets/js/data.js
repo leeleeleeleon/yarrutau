@@ -127,6 +127,9 @@ window.SITE = {
           pitch: 'F#4', range: 'C#4 ~ C#5', // 원음 음높이(측정), 추천 음역
           label: '어린이',
           subname: '어린이찬사 (kid)',
+          image: 'assets/img/chansa-kid.webp',
+          thumb: 'assets/img/chansa-kid-small.webp',
+          focus: '50%',
           sample: 'assets/audio/chansa-kid.mp3',
           voice: 'assets/voices/chansa-kid/',
           downloads: [{ type: 'VCV', size: '45MB', parts: [
