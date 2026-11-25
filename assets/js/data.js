@@ -108,7 +108,7 @@ window.SITE = {
       sample: 'assets/audio/chansa.mp3', // 도레미파솔라시도
       voice: 'assets/voices/chansa/',
       downloads: [
-        { type: 'VCV', url: 'assets/downloads/chansa-vcv.zip', size: '54MB', file: 'chansa_VCV.zip' },
+        { type: 'VCV', url: 'https://www.dropbox.com/scl/fi/kj9qynsy6ex31enf9imcy/chasa.zip?rlkey=9bqrim7h220ke88whz8nw09ce&st=x0q2219z&e=1&dl=1' },
         { type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '25MB', file: 'chansa_CV.zip' },
       ],
       // 위 값이 기본 버전이고, 어린이 버전은 적은 값만 덮어씁니다
@@ -155,7 +155,7 @@ window.SITE = {
       sample: 'assets/audio/kapshong.mp3',
       voice: 'assets/voices/kapshong/',
       // 용량이 커서 여러 조각으로 나눠 둬습니다. parts에 조각을 차례로 적습니다.
-      downloads: [{ type: 'VCV', url: 'assets/downloads/kapshong-vcv.zip', size: '39MB', file: 'KapSchon_VCV.zip' }],
+      downloads: [{ type: 'VCV', url: 'assets/downloads/kapshong-vcv.zip', size: '48MB', file: 'KapSchon_VCV.zip' }],
     },
     {
       id: 'bellein',
@@ -227,7 +227,7 @@ window.SITE = {
       description: '',
       sample: 'assets/audio/nanaba.mp3',
       voice: 'assets/voices/nanaba/',
-      downloads: [{ type: 'VCV', url: 'assets/downloads/nanaba-vcv.zip', size: '73MB', file: 'Nanaba_VCV.zip' }],
+      downloads: [{ type: 'VCV', url: 'assets/downloads/nanaba-vcv.zip', size: '78MB', file: 'Nanaba_VCV.zip' }],
     },
   ],
 };
