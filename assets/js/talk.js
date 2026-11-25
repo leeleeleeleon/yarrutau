@@ -148,8 +148,14 @@ function mk(o) {
 function textToPhrases(text) {
   text = text.normalize('NFKC');
   const phrases = []; let cur = { moras: [] }; const skipped = new Set();
-  const close = end => { if (cur.moras.length) { cur.end = end; phrases.push(cur); } cur = { moras: [] }; };
-  const re = /([가-힣]+)|([ぁ-ゖァ-ヺー]+)|([A-Za-z']+)|([,、，;；:]+)|([.。…\n]+)|([?？]+)|([!！]+)|(\s+)|(.)/g;
+  const close = (end, cnt = 1) => {
+    if (cur.moras.length) { cur.end = end; cur.cnt = cnt; phrases.push(cur); }
+    else if (phrases.length && end !== ',' && phrases[phrases.length - 1].end !== end) {   // "...!" 처럼 이어진 부호는 앞 구절에 합침
+      const pv = phrases[phrases.length - 1]; if (end === '?' || end === '!') { pv.end = end; pv.cnt = cnt; }
+    }
+    cur = { moras: [] };
+  };
+  const re = /([가-힣]+)|([ぁ-ゖァ-ヺー]+)|([A-Za-z']+)|([,、，;；:]+)|([.。…\n]+)|([?？]+)|([!！]+)|(\s+)|([~〜～∼]+)|(.)/g;
   let m, hasKo = false, gapNext = false;
   const push = list => list.forEach((o, i) => { const x = mk(o); if (i === 0 && gapNext && cur.moras.length) { x.gap = true; x.wordStart = true; } cur.moras.push(x); gapNext = false; });
   while ((m = re.exec(text))) {
@@ -158,10 +164,14 @@ function textToPhrases(text) {
     else if (m[3]) push(kanaRun(romajiToKana(m[3])));
     else if (m[8]) gapNext = true;                       // 띄어쓰기 → 짧은 쉼
     else if (m[4]) close(',');
-    else if (m[5]) close('.');
-    else if (m[6]) close('?');
-    else if (m[7]) close('!');
-    else if (m[9] && /[一-鿿]/.test(m[9])) skipped.add(m[9]);
+    else if (m[5]) close(/…|\.\./.test(m[5]) ? '…' : '.');     // 말줄임표는 머뭇거리는 긴 쉼
+    else if (m[6]) close('?', m[6].length);
+    else if (m[7]) close('!', m[7].length);
+    else if (m[9]) {                                      // 물결표: 앞 글자를 늘이며 흥얼거리듯
+      const last = cur.moras[cur.moras.length - 1] || phrases[phrases.length - 1]?.moras.slice(-1)[0];
+      if (last && !last.rest) last.tilde = (last.tilde || 0) + m[9].length;
+    }
+    else if (m[10] && /[一-鿿]/.test(m[10])) skipped.add(m[10]);
   }
   close('.');
   return { phrases, hasKo, skipped: [...skipped] };
@@ -179,10 +189,17 @@ function makePlan(opts) {
   const lang = langSel === 'auto' ? (parsed.hasKo ? 'ko' : 'ja') : langSel;
   const rnd = mulberry(hashStr(text));
   const notes = []; let T = 0.35; const md = 1 / rate;
-  const PAUSE = { ',': 0.2, '.': 0.42, '?': 0.46, '!': 0.42 };
+  const PAUSE = { ',': 0.26, '.': 0.45, '?': 0.48, '!': 0.42, '…': 0.72 };
   parsed.phrases.forEach((ph, pi) => {
     const ms = ph.moras, n = ms.length, end = ph.end;
-    const exc = end === '!' ? 1.5 : 1, lift = end === '!' ? 0.8 + 0.8 * range : 0;
+    const cnt = Math.min(3, ph.cnt || 1);
+    const exc = end === '!' ? 1.3 + 0.25 * cnt : 1, lift = end === '!' ? 0.6 + (0.6 + 0.2 * cnt) * range : 0;
+    // 웃음(하하하·ははは): 같은 ㅎ 소리가 3번 넘게 이어지면 짧게 통통 튀게
+    const laugh = new Array(n).fill(-1);
+    for (let a = 0; a < n;) {
+      let b = a; while (b < n && ms[b].cons === 'h' && ms[b].vowel === ms[a].vowel) b++;
+      if (b - a >= 3) { for (let k = a; k < b; k++) laugh[k] = k - a; a = b; } else a++;
+    }
     if (lang === 'ja') ms.forEach((m, j) => {           // 母音の無声化 (です → des)
       if (!'iu'.includes(m.vowel) || !VOICELESS.has(m.cons)) return;
       const nx = ms[j+1];
@@ -193,7 +210,11 @@ function makePlan(opts) {
       if (m.wordStart) wi = 0; else wi++;
       if (m.gap) T += (gap || 0) / 1000;
       let d = m.dur * md;
-      if (j === n - 1) d *= end === '?' ? 1.5 : 1.35;
+      if (j === n - 1) d *= end === '?' ? 1.5 : end === '…' ? 1.7 : 1.35;
+      else if (j === n - 2 && n > 3) d *= end === '…' ? 1.25 : 1.1;   // 구절 끝으로 갈수록 살짝 느려짐
+      const lg = laugh[j];
+      if (lg >= 0 && j < n - 1) d *= 0.62;
+      if (m.tilde) d *= Math.min(2.8, 1.8 + 0.4 * (m.tilde - 1));
       if (m.devoice) d *= 0.7;
       const prog = n > 1 ? j / (n - 1) : 0;
       let st = lift + range * exc * (1.3 - 2.6 * prog);   // declination
@@ -210,25 +231,35 @@ function makePlan(opts) {
       if (j === n - 1) {
         if (end === '?') { st -= 0.6 * range; stEnd = st + 6.5 * Math.max(range, 0.35); }
         else if (end === ',') stEnd = st + 1.2 * range;
-        else if (end === '!') { st += 1.2 * range + 1; stEnd = st + 3.5 * Math.max(range, 0.4); }   // 느낌표: 끝을 힘차게 올림
+        else if (end === '!') { st += 1.2 * range + 1; stEnd = st + (2.5 + cnt) * Math.max(range, 0.4); }   // 느낌표: 끝을 힘차게 올림
+        else if (end === '…') { st -= 0.4 * range; stEnd = st - (1.6 + 2 * breath) * range; }          // 말끝을 흐림
         else { st -= (0.6 + breath) * range; stEnd = st - (1 + 2.2 * breath) * range; }
       }
+      if (lg >= 0) { st += (lg % 2 ? -1.1 : 0.9) * Math.max(range, 0.5) - 0.35 * lg; stEnd = st; }
+      let mid = null;
+      if (m.tilde) { mid = st + 3.6 * Math.max(range, 0.6); stEnd = (j === n - 1 ? st - 1.5 * Math.max(range, 0.4) : st); }
       const jit = (rnd() - 0.5) * wob * 0.6; st += jit; stEnd += jit;
       const pn = notes[notes.length - 1];
       if (m.coda && pn && !pn.m.rest && j < n - 1) { st = pn.stEnd; stEnd = st; }   // 받침은 앞 음절 높이 그대로
       const ov = (opts.overrides || {})[notes.length];
       let vol = end === '!' ? 1.15 : 1;
       if (ov) { if (ov.dur) d *= ov.dur; if (ov.dst) { st += ov.dst; stEnd += ov.dst; } if (ov.bend) stEnd += ov.bend; if (ov.vol != null) vol *= ov.vol; }
-      notes.push({ m, T, d, st, stEnd, vol, ov, pi, j, n, end, first: j === 0 || (!!m.gap && gap > 0), last: j === n - 1 });
+      if (lg > 0) vol *= 0.92;
+      notes.push({ m, T, d, st, stEnd, mid, vol, ov, pi, j, n, end, first: j === 0 || (!!m.gap && gap > 0), last: j === n - 1 });
       T += d;
     });
-    T += PAUSE[end] * Math.min(1.4, Math.max(0.7, 7.2 / rate));
+    T += (PAUSE[end] ?? 0.42) * Math.min(1.4, Math.max(0.7, 7.2 / rate));
   });
   const total = T + 0.35;
   // pitch control points → smooth curve (5 ms frames)
   const step = 0.005, nf = Math.ceil(total / step) + 2, st = new Float32Array(nf);
   const pts = [];
-  notes.forEach(nt => { if (nt.m.rest) return; pts.push([nt.T + 0.12 * nt.d, nt.st]); pts.push([nt.T + 0.88 * nt.d, nt.stEnd]); });
+  notes.forEach(nt => {
+    if (nt.m.rest) return;
+    pts.push([nt.T + 0.12 * nt.d, nt.st]);
+    if (nt.mid != null) pts.push([nt.T + 0.45 * nt.d, nt.mid]);
+    pts.push([nt.T + 0.88 * nt.d, nt.stEnd]);
+  });
   if (pts.length) {
     let k = 0;
     for (let f = 0; f < nf; f++) {
@@ -424,7 +455,7 @@ async function renderVB(plan, onProgress) {
     const fout = Math.max(48, Math.round((linked ? Math.max(nx.ovl, 0.012) : 0.045) * SR));
     const o0 = Math.round(nt.start * SR);
     const tA = Math.round((nt.T - nt.start) * SR), tB = Math.round((nt.T + nt.d - nt.start) * SR);
-    const keep = nt.last ? (nt.end === '!' ? 0.9 : nt.end === '?' ? 0.85 : nt.end === ',' ? 0.6 : 0.3) : 1;
+    const keep = nt.last ? (nt.end === '!' ? 0.9 : nt.end === '?' ? 0.85 : nt.end === ',' ? 0.6 : nt.end === '…' ? 0.2 : nt.m.tilde ? 0.55 : 0.3) : 1;
     for (let k = 0; k < L; k++) {
       let env = 1;
       if (k < fin) env *= 0.5 - 0.5 * Math.cos(Math.PI * k / fin);
