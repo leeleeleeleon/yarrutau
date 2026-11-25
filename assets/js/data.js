@@ -151,7 +151,7 @@ window.SITE = {
       descriptionJa: 'プロデューサーをやろうと思っていたのに、気がつけば歌手をしていました。',
       sample: 'assets/audio/bellein.mp3',
       voice: 'assets/voices/bellein/',
-      downloads: [{ type: 'VCV', url: 'assets/downloads/bellein.zip', size: '17MB', file: 'Bellein.zip' }],
+      downloads: [{ type: 'CVVC', url: 'assets/downloads/bellein.zip', size: '17MB', file: 'Bellein.zip' }],
     },
     {
       id: 'sereni',
