@@ -511,7 +511,7 @@ const characters = window.SITE.characters.flatMap(c => !c.versions ? [c] : c.ver
 })).filter((v, i) => i === 0 || v.voice));
 const esc = v => String(v).replace(/[&<>"']/g, ch => `&#${ch.charCodeAt(0)};`);
 const LINES = {
-  chansa: ['안녕하세요, 찬사예요!', '치즈 주면 노래해 줄게냥!', 'パーティーしよう! かんぱーい!', 'きょうも いちにち おつかれさま!'],
+  chansa: ['안녕하세요, 찬사에요.', 'かんぱーーーい!!!', 'マスタァー!!! こんにちは!', 'あたし ネコだにゃ!'],
   'ryookoro-ki': ['안녕하세요, 료오코로 키예요.', '오늘도 유령들이랑 노래해요!', 'おばけたちと うたおう!'],
   'ryookoro-ki-whisper': ['쉿... 조용히 들어 주세요.', '키... 흉내... 내는 중...', 'ないしょだよ...'],
   kapshong: ['나는 카프숑이다.', '자비를 베풀겠노라!', 'わたしが かみだ!'],
