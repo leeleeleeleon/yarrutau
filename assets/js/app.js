@@ -20,7 +20,13 @@
   const langOf = (text) => (/[^\x00-\x7F]/.test(text) ? 'ja' : 'en');
   const themeOf = (c) =>
     `--bg:${c.color};--ink:${c.ink};--accent:${c.accent};--on-accent:${c.onAccent}`;
-  const baseDownloads = (c) => c.downloads || c.versions?.[0]?.downloads || [];
+  // 버전이 있는 캐릭터는 모든 버전의 음원을 함께 보여 준다 (기본 + 위스퍼 등)
+  const allDownloads = (c) => {
+    const base = characters.find((x) => x.id === c.id) || c;
+    if (!base.versions) return base.downloads || [];
+    return base.versions.flatMap((v, i) => (v.downloads || (i === 0 ? base.downloads : null) || [])
+      .map((d) => ({ ...d, ver: v.label })));
+  };
 
   // 상단 피아노롤: 우타우 편집 화면처럼 마디, 건반, 노트, 피치선
   const ROLL = { top: 28, row: 20, width: 1440, height: 240 };
@@ -129,9 +135,9 @@
       </footer>`;
   }
 
-  function chip(c, { type, url, size, parts }) {
+  function chip(c, { type, url, size, parts, ver }) {
     url = url || parts?.[0]?.url;
-    const inner = `${esc(type)}<small>${url ? esc(size || '') : '준비 중'}</small>`;
+    const inner = `${esc(type)}${ver ? ` ${esc(ver)}` : ''}<small>${url ? esc(size || '') : '준비 중'}</small>`;
     return url
       ? `<span class="chip" style="background:${c.color};color:${c.ink}">${inner}</span>`
       : `<span class="chip is-empty">${inner}</span>`;
@@ -154,7 +160,7 @@
         </div>`;
       const notes = [c.subname, c.versions?.map((v) => v.label).join(' / '), c.sample ? '샘플 듣기 가능' : '']
         .filter(Boolean).join(' · ');
-      const downloads = baseDownloads(c);
+      const downloads = allDownloads(c);
       return `
         <a class="vb" href="${c.id}.html">
           <div class="vb-thumb" style="background:${c.color}">
@@ -284,12 +290,13 @@
         : `<span class="download is-empty">${name}<small>준비 중</small></span>`;
     };
     // 용량이 커서 나눈 음원: 조각을 모두 받아 같은 곳에 풀면 한 폴더로 합쳐집니다
-    const downloads = c.downloads.map((d) => d.parts?.length
+    const list = allDownloads(c);
+    const downloads = list.map((d) => d.parts?.length
       ? `<div class="download-set">
-          <p class="download-note">${esc(d.type)} ${KIND[d.type] || ''} · ${d.size ? `${esc(d.size)} · ` : ''}${d.parts.length}개로 나눠 두었어요. 모두 받아서 같은 곳에 압축을 풀면 한 폴더로 합쳐져요.</p>
+          <p class="download-note">${d.ver ? `${esc(d.ver)} · ` : ''}${esc(d.type)} ${KIND[d.type] || ''} · ${d.size ? `${esc(d.size)} · ` : ''}${d.parts.length}개로 나눠 두었어요. 모두 받아서 같은 곳에 압축을 풀면 한 폴더로 합쳐져요.</p>
           <div class="download-parts">${d.parts.map((p, i) => one({ type: d.type, url: p.url, size: p.size, file: p.file }, `${i + 1}/${d.parts.length}`)).join('')}</div>
         </div>`
-      : one(d)).join('');
+      : one(d, d.ver ? `${d.ver} · ${KIND[d.type] || ''}` : '')).join('');
 
     let n = 0;
     const heading = (text) => `<h2><span class="mono">${num(n++)}</span>${text}</h2>`;
