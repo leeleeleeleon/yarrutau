@@ -108,15 +108,8 @@ window.SITE = {
       sample: 'assets/audio/chansa.mp3', // 도레미파솔라시도
       voice: 'assets/voices/chansa/',
       downloads: [
-        { type: 'VCV', size: '52MB', parts: [
-          { url: 'assets/downloads/chansa-vcv-1.zip', size: '19MB', file: 'chansa_VCV_1.zip' },
-          { url: 'assets/downloads/chansa-vcv-2.zip', size: '19MB', file: 'chansa_VCV_2.zip' },
-          { url: 'assets/downloads/chansa-vcv-3.zip', size: '14MB', file: 'chansa_VCV_3.zip' },
-        ] },
-        { type: 'CV', size: '24MB', parts: [
-          { url: 'assets/downloads/chansa-cv-1.zip', size: '13MB', file: 'chansa_CV_1.zip' },
-          { url: 'assets/downloads/chansa-cv-2.zip', size: '12MB', file: 'chansa_CV_2.zip' },
-        ] },
+        { type: 'VCV', url: 'assets/downloads/chansa-vcv.zip', size: '54MB', file: 'chansa_VCV.zip' },
+        { type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '25MB', file: 'chansa_CV.zip' },
       ],
       // 위 값이 기본 버전이고, 어린이 버전은 적은 값만 덮어씁니다
       versions: [
@@ -132,11 +125,7 @@ window.SITE = {
           focus: '50%',
           sample: 'assets/audio/chansa-kid.mp3',
           voice: 'assets/voices/chansa-kid/',
-          downloads: [{ type: 'VCV', size: '45MB', parts: [
-            { url: 'assets/downloads/chansa-kid-vcv-1.zip', size: '19MB', file: 'chansa_kid_VCV_1.zip' },
-            { url: 'assets/downloads/chansa-kid-vcv-2.zip', size: '19MB', file: 'chansa_kid_VCV_2.zip' },
-            { url: 'assets/downloads/chansa-kid-vcv-3.zip', size: '8MB', file: 'chansa_kid_VCV_3.zip' },
-          ] }],
+          downloads: [{ type: 'VCV', url: 'assets/downloads/chansa-kid-vcv.zip', size: '48MB', file: 'chansa_kid_VCV.zip' }],
         },
       ],
     },
@@ -166,10 +155,7 @@ window.SITE = {
       sample: 'assets/audio/kapshong.mp3',
       voice: 'assets/voices/kapshong/',
       // 용량이 커서 여러 조각으로 나눠 둬습니다. parts에 조각을 차례로 적습니다.
-      downloads: [{ type: 'VCV', size: '37MB', parts: [
-        { url: 'assets/downloads/kapshong-vcv-1.zip', size: '19MB', file: 'KapSchon_VCV_1.zip' },
-        { url: 'assets/downloads/kapshong-vcv-2.zip', size: '19MB', file: 'KapSchon_VCV_2.zip' },
-      ] }],
+      downloads: [{ type: 'VCV', url: 'assets/downloads/kapshong-vcv.zip', size: '39MB', file: 'KapSchon_VCV.zip' }],
     },
     {
       id: 'bellein',
@@ -223,10 +209,7 @@ window.SITE = {
       descriptionJa: '元夫の「ジェイド」を忘れてしまった、おバカなレトリバー。\nジェイドに勧められて歌を始めた。',
       sample: 'assets/audio/sereni.mp3',
       voice: 'assets/voices/sereni/',
-      downloads: [{ type: 'VCV', size: '29MB', parts: [
-        { url: 'assets/downloads/sereni-vcv-1.zip', size: '19MB', file: 'Serenity_VCV_1.zip' },
-        { url: 'assets/downloads/sereni-vcv-2.zip', size: '11MB', file: 'Serenity_VCV_2.zip' },
-      ] }],
+      downloads: [{ type: 'VCV', url: 'assets/downloads/sereni-vcv.zip', size: '31MB', file: 'Serenity_VCV.zip' }],
     },
     {
       id: 'nanaba',
@@ -244,12 +227,7 @@ window.SITE = {
       description: '',
       sample: 'assets/audio/nanaba.mp3',
       voice: 'assets/voices/nanaba/',
-      downloads: [{ type: 'VCV', size: '69MB', parts: [
-        { url: 'assets/downloads/nanaba-vcv-1.zip', size: '19MB', file: 'Nanaba_VCV_1.zip' },
-        { url: 'assets/downloads/nanaba-vcv-2.zip', size: '19MB', file: 'Nanaba_VCV_2.zip' },
-        { url: 'assets/downloads/nanaba-vcv-3.zip', size: '19MB', file: 'Nanaba_VCV_3.zip' },
-        { url: 'assets/downloads/nanaba-vcv-4.zip', size: '13MB', file: 'Nanaba_VCV_4.zip' },
-      ] }],
+      downloads: [{ type: 'VCV', url: 'assets/downloads/nanaba-vcv.zip', size: '73MB', file: 'Nanaba_VCV.zip' }],
     },
   ],
 };
