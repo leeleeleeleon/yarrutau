@@ -1,5 +1,5 @@
 (() => {
-  const { characters, songs, contact } = window.SITE;
+  const { characters, songs, contact, news = [] } = window.SITE;
   const page = document.body.dataset.page;
   const character = characters.find((c) => c.id === page);
   const KIND = { VCV: '연속음', CV: '단독음' };
@@ -196,10 +196,17 @@
             <ul class="song-list" id="song-list"></ul>
           </section>
         </div>
+        ${news.length ? `<section class="news" aria-labelledby="news-title">
+          <div class="section-head">
+            <h2 id="news-title">소식</h2>
+            <span class="mono">NEWS</span>
+          </div>
+          <ul class="news-list">${news.map((x) => `<li><time class="mono">${esc(x.date)}</time><span>${esc(x.text)}</span></li>`).join('')}</ul>
+        </section>` : ''}
         <section class="voicebanks" aria-labelledby="vb-title">
           <div class="section-head">
             <h2 id="vb-title">음원 배포</h2>
-            <span class="mono">VCV 연속음 · CV 단독음</span>
+            <span class="mono">VCV 연속음 · CV 단독음 · CVVC</span>
           </div>
           ${voicebanks}
         </section>
@@ -265,6 +272,22 @@
     const bars = WAVE.map((h, i) => `<rect x="${i * 8}" y="${20 - h}" width="4" height="${h * 2}"/>`).join('');
     const w = WAVE.length * 8 - 4;
     return `<svg viewBox="0 0 ${w} 40" preserveAspectRatio="none" aria-hidden="true">${bars}</svg>`;
+  }
+
+  // 음원 정보 표: 형식은 이 버전의 다운로드에서, 음높이는 원음을 측정한 값
+  function profileTable(c) {
+    const own = c.versions ? allDownloads(c).filter((d) => d.ver === c.versionLabel) : allDownloads(c);
+    const types = [...new Set(own.map((d) => d.type))]
+      .map((t) => `${t}${KIND[t] ? ` (${KIND[t]})` : ''}`).join(' · ');
+    const rows = [
+      ['음원 형식', types],
+      ['원음 음높이', c.pitch],
+      ['추천 음역', c.range],
+      ['CV', c.cv],
+      ['일러스트', c.illust],
+    ].filter(([, v]) => v);
+    return `<dl class="spec">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd lang="${/[぀-ヿ]/.test(v) ? 'ja' : 'ko'}">${esc(v)}</dd></div>`).join('')}</dl>
+          <p class="spec-note">추천 음역은 원음 음높이를 측정해 잡은 참고값이에요. 곡에 따라 더 넓게 써도 괜찮아요.</p>`;
   }
 
   function profile(c) {
@@ -336,6 +359,9 @@
           <p class="description">${esc(c.description || '소개가 곧 올라와요.')}</p>
           ${c.descriptionEn ? `<p class="description" lang="en">${esc(c.descriptionEn)}</p>` : ''}
           ${c.descriptionJa ? `<p class="description" lang="ja">${esc(c.descriptionJa)}</p>` : ''}
+
+          ${heading('프로필')}
+          ${profileTable(c)}
 
           ${downloads ? `${heading('음원 다운로드')}
           <div class="downloads">${downloads}</div>` : ''}

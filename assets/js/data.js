@@ -13,6 +13,12 @@ window.SITE = {
   },
 
   // 메인 화면 곡 목록. 맨 위 곡이 처음에 보입니다.
+  // 업데이트 소식: 새 소식을 맨 위에 추가
+  news: [
+    { date: '2026.11.25', text: '벨레인 음원 형식을 CVVC로 정정했어요.' },
+    { date: '2026.11.25', text: '료오코로 키 위스퍼(CV) 배포 링크를 올렸어요.' },
+    { date: '2026.11.25', text: '야르르UTAU 공식 홈페이지 오픈! 세레니, 나나바, 어린이찬사 음원과 말 시키기(TTS)도 함께 공개했어요.' },
+  ],
   songs: [
     // { title: '곡 제목', type: '오리지널', singers: ['kapshong'], credit: '작곡 OOO', youtube: 'https://youtu.be/...' },
     // { title: '곡 제목', type: '커버', singers: ['chansa', 'bellein'], credit: '', youtube: 'https://youtu.be/...' },
@@ -28,6 +34,7 @@ window.SITE = {
   characters: [
     {
       id: 'ryookoro-ki',
+      pitch: 'D#3', range: 'A#2 ~ A#3', // 원음 음높이(측정), 추천 음역
       name: '료오코로 키',
       en: 'Ryookoro Ki',
       bgText: '鬼',
@@ -52,6 +59,7 @@ window.SITE = {
         },
         {
           id: 'whisper',
+          pitch: 'F3', range: 'C3 ~ C4', // 원음 음높이(측정), 추천 음역
           label: '위스퍼',
           subname: '獵殺 鬼(whisper / ウィスパー)',
           description: '키가 수집했던 유령들이 모여 만들어 낸 키의 흉내입니다.\n안광이 없습니다.',
@@ -67,6 +75,7 @@ window.SITE = {
     },
     {
       id: 'chansa',
+      pitch: 'F4', range: 'C4 ~ C5', // 원음 음높이(측정), 추천 음역
       name: '찬사',
       en: 'Chansa',
       subname: 'chansa',
@@ -98,6 +107,7 @@ window.SITE = {
         { id: 'normal', label: '기본' },
         {
           id: 'kid',
+          pitch: 'F#4', range: 'C#4 ~ C#5', // 원음 음높이(측정), 추천 음역
           label: '어린이',
           subname: '어린이찬사 (kid)',
           sample: 'assets/audio/chansa-kid.mp3',
@@ -112,6 +122,7 @@ window.SITE = {
     },
     {
       id: 'kapshong',
+      pitch: 'F4', range: 'C4 ~ C5', // 원음 음높이(측정), 추천 음역
       name: '카프숑',
       en: 'KapSchon',
       subname: 'KapSchon',
@@ -135,6 +146,7 @@ window.SITE = {
     },
     {
       id: 'bellein',
+      pitch: 'C4', range: 'G3 ~ G4', // 원음 음높이(측정), 추천 음역
       name: '벨레인',
       en: 'Bellein',
       subname: 'ベレイン(Bellein)',
@@ -155,6 +167,7 @@ window.SITE = {
     },
     {
       id: 'sereni',
+      pitch: 'F3', range: 'C3 ~ C4', // 원음 음높이(측정), 추천 음역
       name: '세레니',
       en: 'Serenity',
       subname: 'Serenity',
@@ -176,6 +189,7 @@ window.SITE = {
     },
     {
       id: 'nanaba',
+      pitch: 'C4', range: 'G3 ~ G4', // 원음 음높이(측정), 추천 음역
       name: '나나바',
       en: 'Nanaba',
       subname: 'Nanaba',

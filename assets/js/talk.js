@@ -475,7 +475,7 @@ const BLOCK = {
   ],
   hate: [
     '병신','애자','한남충','김치녀','된장녀','짱깨','쪽바리','깜둥이','흑형','틀딱','급식충','장애인새끼',
-    '死ね','しね','きちがい','がいじ','ちょうせんじん','しなじん',
+    '死ね','きちがい','がいじ','ちょうせんじん','しなじん',
   ],
 };
 const EN = /\b(sex\w*|porn\w*|nude|naked|fuck\w*|dick|pussy|boobs?|cock|cum|horny|nsfw|hentai|ecchi|oppai|chinko|manko|rape|nigg\w*|fag\w*|retard\w*|politic\w*|election|president|trump|biden|putin|hitler|nazi\w*|democrat\w*|republican\w*|senkyo|seiji|tennou|jimintou)\b/i;
@@ -486,7 +486,10 @@ function blocked(text) {
   if (EN.test(text.normalize('NFKC'))) return true;
   const a = compact(text);
   const kana = textToPhrases(text).phrases.flatMap(p => p.moras.map(m => m.kana === 'っ' ? 'っ' : m.kana)).join('');
-  return WORDS.some(w => a.includes(w) || kana.includes(w));
+  if (WORDS.some(w => a.includes(w) || kana.includes(w))) return true;
+  // 'しね'처럼 짧은 욕은 다른 낱말 속('あたし ねこ')에 섞이기 쉬워서, 따로 떨어진 낱말일 때만 막습니다
+  const words = toHiraAll(text.normalize('NFKC')).split(/[^\p{L}\p{N}ー]+/u);
+  return words.some(w => /^(しね|しねよ|しねや|しんで|しんじまえ)[ーぇっ]*$/.test(w));
 }
 
 /* ---------------- 음원 불러오기 ---------------- */
