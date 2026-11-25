@@ -159,7 +159,7 @@ window.SITE = {
       focus: '40%',
       logo: 'assets/img/logo-kapshong.webp',
       description: '자비와 부로 8천만 신도를 거느린 사이비 종교 언카프카의 교주입니다. 여러곳을 거느리며 공포정치를 펼칩니다.\n자신을 신이라고 생각합니다.',
-      descriptionEn: 'The leader of the cult "Unkafka," commanding 80 million followers through mercy and wealth. Ruling over numerous territories, he enforces a reign of terror.\nHe believes himself to be a god.',
+      descriptionEn: 'The leader of the cult "Unkafka," commanding 80 million followers through mercy and wealth. Ruling over numerous territories, they enforce a reign of terror.\nThey believe themselves to be a god.',
       sample: 'assets/audio/kapshong.mp3',
       voice: 'assets/voices/kapshong/',
       // 용량이 커서 여러 조각으로 나눠 둬습니다. parts에 조각을 차례로 적습니다.
