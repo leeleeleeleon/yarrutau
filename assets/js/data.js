@@ -109,11 +109,23 @@ window.SITE = {
       voice: 'assets/voices/chansa/',
       downloads: [
         { type: 'VCV', url: 'https://www.dropbox.com/scl/fi/kj9qynsy6ex31enf9imcy/chasa.zip?rlkey=9bqrim7h220ke88whz8nw09ce&st=x0q2219z&e=1&dl=1' },
-        { type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '20MB', file: 'chansa_CV.zip' },
       ],
       // 위 값이 기본 버전이고, 어린이 버전은 적은 값만 덮어씁니다
       versions: [
         { id: 'normal', label: '기본' },
+        {
+          id: 'cv',
+          talkName: '찬사 단독음',
+          pitch: 'D4', range: 'A3 ~ A4', // 원음 음높이(측정), 추천 음역
+          label: '단독음',
+          subname: 'CHANSA (CV)',
+          image: 'assets/img/chansa-cv.webp',
+          thumb: 'assets/img/chansa-cv-small.webp',
+          focus: '60%',
+          sample: 'assets/audio/chansa-cv.mp3',
+          voice: 'assets/voices/chansa-cv/',
+          downloads: [{ type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '19MB', file: 'chansa_CV.zip' }],
+        },
         {
           id: 'kid',
           talkName: '어린이찬사',

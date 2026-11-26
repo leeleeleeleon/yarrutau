@@ -546,6 +546,7 @@ const characters = window.SITE.characters.flatMap(c => !c.versions ? [c] : c.ver
 const esc = v => String(v).replace(/[&<>"']/g, ch => `&#${ch.charCodeAt(0)};`);
 const LINES = {
   chansa: ['안녕하세요, 찬사에요.', 'かんぱーーーい!!!', 'マスタァー!!! こんにちは!', 'あたし ネコだにゃ!'],
+  'chansa-cv': ['안녕하세요, 찬사에요.', 'かんぱーーーい!!!', 'マスタァー!!! こんにちは!', 'あたし ネコだにゃ!'],
   'ryookoro-ki': ['오늘은 코러스 누구로 할까?', '아하하하하!', 'びっくりした?', 'にげちゃだめだよ〜'],
   'ryookoro-ki-whisper': ['비밀이야~', '노래를 불러보자.', 'しずかに…ね?', 'わからないほうがいいよ.'],
   kapshong: ['나는 카프숑이다.', '자비를 베풀겠노라!', 'わたしが かみだ!'],

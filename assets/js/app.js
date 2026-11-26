@@ -330,7 +330,7 @@
           <p class="download-note">${d.ver ? `${esc(d.ver)} · ` : ''}${esc(d.type)} ${KIND[d.type] || ''} · ${d.size ? `${esc(d.size)} · ` : ''}${d.parts.length}개로 나눠 두었어요. 모두 받아서 같은 곳에 압축을 풀면 한 폴더로 합쳐져요.</p>
           <div class="download-parts">${d.parts.map((p, i) => one({ type: d.type, url: p.url, size: p.size, file: p.file }, `${i + 1}/${d.parts.length}`)).join('')}</div>
         </div>`
-      : one(d, d.ver ? `${d.ver} · ${KIND[d.type] || ''}` : '')).join('');
+      : one(d, d.ver ? (d.ver === KIND[d.type] ? d.ver : `${d.ver} · ${KIND[d.type] || ''}`) : '')).join('');
 
     let n = 0;
     const heading = (text) => `<h2><span class="mono">${num(n++)}</span>${text}</h2>`;
