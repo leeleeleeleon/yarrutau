@@ -5,6 +5,8 @@
 */
 window.SITE = {
   // 사이트 오른쪽 아래 연락처. 누구나 볼 수 있으니 공개용 주소만 넣으세요.
+  // 모든 음원의 원음설정(oto) 담당 — 캐릭터 페이지 프로필 표와 맨 아래에 작게 표시
+  otoCredit: 'EX3님',
   contact: {
     email: 'yarrutau67@gmail.com',
     links: [
@@ -197,7 +199,7 @@ window.SITE = {
       descriptionJa: 'プロデューサーをやろうと思っていたのに、気がつけば歌手をしていました。',
       sample: 'assets/audio/bellein.mp3',
       voice: 'assets/voices/bellein/',
-      downloads: [{ type: 'CVVC', url: 'assets/downloads/bellein.zip', size: '17MB', file: 'Bellein.zip' }],
+      downloads: [{ type: 'CVVC', url: 'assets/downloads/bellein.zip', size: '18MB', file: 'Bellein.zip' }],
     },
     {
       id: 'sereni',
@@ -223,7 +225,7 @@ window.SITE = {
       descriptionJa: '元夫の「ジェイド」を忘れてしまった、おバカなレトリバー。\nジェイドに勧められて歌を始めた。',
       sample: 'assets/audio/sereni.mp3',
       voice: 'assets/voices/sereni/',
-      downloads: [{ type: 'VCV & CVVC', url: 'assets/downloads/sereni-vcv.zip', size: '32MB', file: 'serenity.zip' }],
+      downloads: [{ type: 'VCV & CVVC', url: 'assets/downloads/sereni-vcv.zip', size: '33MB', file: 'serenity.zip' }],
     },
     {
       id: 'nanaba',

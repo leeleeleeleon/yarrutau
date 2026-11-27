@@ -171,7 +171,9 @@ body:not([data-page='home']) .tab:not([aria-current]):not(:hover):not(:focus-vis
 .song-empty svg { width: 160px; fill: #e7e7ea; }
 .song-empty-title { color: #000; font: 400 26px/1.2 var(--display); }
 
-.voicebanks, .news { margin-top: clamp(56px, 9vh, 96px); }
+.voicebanks, .news, .range-chart { margin-top: clamp(56px, 9vh, 96px); }
+.range-chart img { display: block; width: 100%; height: auto; border: 2px solid #000; }
+.credit { flex-basis: 100%; margin: 0; padding: 0 var(--gutter) 14px; text-align: right; font: 500 11px var(--mono); letter-spacing: 0.08em; opacity: .7; }
 .news-list { list-style: none; margin: 0; padding: 0; }
 .news-list li {
   display: grid;

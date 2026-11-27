@@ -1,5 +1,5 @@
 (() => {
-  const { characters, songs, contact, news = [] } = window.SITE;
+  const { characters, songs, contact, news = [], otoCredit = '' } = window.SITE;
   const page = document.body.dataset.page;
   const character = characters.find((c) => c.id === page);
   const KIND = { VCV: '연속음', CV: '단독음' };
@@ -132,6 +132,7 @@
       <footer class="footer">
         ${current ? '' : `<div class="footer-mark"><img src="assets/img/logo.webp" alt=""><span>YARRUTAU OFFICIAL</span></div>`}
         <div class="contact"><h2>연락</h2>${items.join('') || '<p>연락처 준비 중</p>'}</div>
+        ${otoCredit ? `<p class="credit">원음설정(oto) · ${esc(otoCredit)}</p>` : ''}
       </footer>`;
   }
 
@@ -203,6 +204,13 @@
           </div>
           <ul class="news-list">${news.map((x) => `<li><time class="mono">${esc(x.date)}</time><span>${esc(x.text)}</span></li>`).join('')}</ul>
         </section>` : ''}
+        <section class="range-chart" aria-labelledby="range-title">
+          <div class="section-head">
+            <h2 id="range-title">음역 비교</h2>
+            <span class="mono">RANGE</span>
+          </div>
+          <a href="assets/img/range.png" target="_blank" rel="noopener"><img src="assets/img/range.webp" width="1800" height="1320" loading="lazy" alt="야르르UTAU 음원 9개의 추천 음역과 원음 음높이를 피아노 건반 위에 비교한 그래프"></a>
+        </section>
         <section class="voicebanks" aria-labelledby="vb-title">
           <div class="section-head">
             <h2 id="vb-title">음원 배포</h2>
@@ -284,6 +292,7 @@
       ['원음 음높이', c.pitch],
       ['추천 음역', c.range],
       ['CV', c.cv],
+      ['원음설정', c.oto || otoCredit],
       ['일러스트', c.illust],
     ].filter(([, v]) => v);
     return `<dl class="spec">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd lang="${/[぀-ヿ]/.test(v) ? 'ja' : 'ko'}">${esc(v)}</dd></div>`).join('')}</dl>
