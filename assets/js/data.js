@@ -15,6 +15,7 @@ window.SITE = {
   // 메인 화면 곡 목록. 맨 위 곡이 처음에 보입니다.
   // 업데이트 소식: 새 소식을 맨 위에 추가
   news: [
+    { date: '2026.11.27', text: '세레니 음원을 원음설정을 마친 새 버전(VCV & CVVC)으로 바꿨어요.' },
     { date: '2026.11.27', text: '벨레인 음원을 새 버전으로 바꿨어요.' },
     { date: '2026.11.25', text: '료오코로 키, 찬사, 카프숑, 벨레인, 세레니의 사용 규약을 올렸어요.' },
     { date: '2026.11.25', text: '벨레인 음원 형식을 CVVC로 정정했어요.' },
@@ -200,7 +201,7 @@ window.SITE = {
     },
     {
       id: 'sereni',
-      pitch: 'F3', range: 'C3 ~ C4', // 원음 음높이(측정), 추천 음역
+      pitch: 'F#3', range: 'C#3 ~ C#4', // 원음 음높이(측정), 추천 음역
       terms: [
         ['상업 이용', 'ask', '따로 문의해 주세요'],
         ['R-18', 'ok', '가능'],
@@ -222,7 +223,7 @@ window.SITE = {
       descriptionJa: '元夫の「ジェイド」を忘れてしまった、おバカなレトリバー。\nジェイドに勧められて歌を始めた。',
       sample: 'assets/audio/sereni.mp3',
       voice: 'assets/voices/sereni/',
-      downloads: [{ type: 'VCV', url: 'assets/downloads/sereni-vcv.zip', size: '31MB', file: 'Serenity_VCV.zip' }],
+      downloads: [{ type: 'VCV & CVVC', url: 'assets/downloads/sereni-vcv.zip', size: '32MB', file: 'serenity.zip' }],
     },
     {
       id: 'nanaba',
