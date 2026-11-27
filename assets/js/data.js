@@ -133,6 +133,7 @@ window.SITE = {
         {
           id: 'kid',
           talkName: '어린이찬사',
+          oto: '', // 원음설정 표기 안 함
           pitch: 'F#4', range: 'C#4 ~ C#5', // 원음 음높이(측정), 추천 음역
           label: '어린이',
           subname: '어린이찬사 (kid)',

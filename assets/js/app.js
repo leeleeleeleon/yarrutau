@@ -292,7 +292,7 @@
       ['원음 음높이', c.pitch],
       ['추천 음역', c.range],
       ['CV', c.cv],
-      ['원음설정', c.oto || otoCredit],
+      ['원음설정', 'oto' in c ? c.oto : otoCredit],
       ['일러스트', c.illust],
     ].filter(([, v]) => v);
     return `<dl class="spec">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd lang="${/[぀-ヿ]/.test(v) ? 'ja' : 'ko'}">${esc(v)}</dd></div>`).join('')}</dl>
