@@ -19,7 +19,7 @@ window.SITE = {
   news: [
     { date: '2026.11.27', text: '세레니 음원을 원음설정을 마친 새 버전(VCV & CVVC)으로 바꿨어요.' },
     { date: '2026.11.27', text: '벨레인 음원을 새 버전으로 바꿨어요.' },
-    { date: '2026.11.25', text: '료오코로 키, 찬사, 카프숑, 벨레인, 세레니의 사용 규약을 올렸어요.' },
+    { date: '2026.11.25', text: '료오코로 키, 찬사, 카프숑, 벨레인, 세레니, 나나바의 사용 규약을 올렸어요.' },
     { date: '2026.11.25', text: '벨레인 음원 형식을 CVVC로 정정했어요.' },
     { date: '2026.11.25', text: '료오코로 키 위스퍼(CV) 배포 링크를 올렸어요.' },
     { date: '2026.11.25', text: '야르르UTAU 공식 홈페이지 오픈! 세레니, 나나바, 어린이찬사 음원과 말 시키기(TTS)도 함께 공개했어요.' },
@@ -231,6 +231,14 @@ window.SITE = {
     {
       id: 'nanaba',
       pitch: 'C4', range: 'G3 ~ G4', // 원음 음높이(측정), 추천 음역
+      // 찬사와 같은 규약 (크레딧은 나나바 CV)
+      terms: [
+        ['상업 이용', 'ask', ''],
+        ['R-18', 'ok', '가능'],
+        ['정치·종교', 'no', '불가'],
+        ['수정·재배포', 'ok', '가능'],
+        ['크레딧 표기', '', '냥랄'],
+      ],
       name: '나나바',
       en: 'Nanaba',
       subname: 'Nanaba',
@@ -241,7 +249,8 @@ window.SITE = {
       image: 'assets/img/nanaba.webp',
       thumb: 'assets/img/nanaba-small.webp',
       focus: '45%',
-      description: '',
+      description: '경매사이자 사기꾼입니다.\n100원짜리를 100000원에 사게 하는 대단한 화술을 갖고 있습니다.',
+      descriptionJa: 'オークショニアであり、詐欺師です。\n100円のものを100000円で買わせてしまう、すごい話術を持っています。',
       sample: 'assets/audio/nanaba.mp3',
       voice: 'assets/voices/nanaba/',
       downloads: [{ type: 'VCV', url: 'assets/downloads/nanaba-vcv.zip', size: '78MB', file: 'Nanaba_VCV.zip' }],
