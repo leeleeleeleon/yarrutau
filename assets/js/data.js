@@ -200,7 +200,7 @@ window.SITE = {
       descriptionJa: 'プロデューサーをやろうと思っていたのに、気がつけば歌手をしていました。',
       sample: 'assets/audio/bellein.mp3',
       voice: 'assets/voices/bellein/',
-      downloads: [{ type: 'CVVC', url: 'assets/downloads/bellein.zip', size: '18MB', file: 'Bellein.zip' }],
+      downloads: [{ type: 'CVVC', url: 'assets/downloads/bellein.zip', size: '17MB', file: 'Bellein.zip' }],
     },
     {
       id: 'sereni',
@@ -226,7 +226,7 @@ window.SITE = {
       descriptionJa: '元夫の「ジェイド」を忘れてしまった、おバカなレトリバー。\nジェイドに勧められて歌を始めた。',
       sample: 'assets/audio/sereni.mp3',
       voice: 'assets/voices/sereni/',
-      downloads: [{ type: 'VCV & CVVC', url: 'assets/downloads/sereni-vcv.zip', size: '33MB', file: 'serenity.zip' }],
+      downloads: [{ type: 'VCV & CVVC', url: 'assets/downloads/sereni-vcv.zip', size: '38MB', file: 'Serenity.zip' }],
     },
     {
       id: 'nanaba',
