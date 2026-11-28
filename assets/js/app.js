@@ -227,17 +227,32 @@
     let filter = '전체';
     let selected = songs[0];
 
+    const canEmbed = /(^|\.)github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
+    // 썸네일은 사이트 안에 저장한 사본(assets/img/songs/영상ID.webp)을 먼저 쓰고, 없으면 유튜브 것을 씁니다
+    function thumbImg(song, size) {
+      const id = youtubeId(song.youtube);
+      const local = song.thumb || `assets/img/songs/${id}${size === 'big' ? '' : '-small'}.webp`;
+      const yt = `https://i.ytimg.com/vi/${id}/${size === 'big' ? 'hqdefault' : 'mqdefault'}.jpg`;
+      return `<img ${size === 'big' ? '' : 'class="song-thumb" loading="lazy" '}src="${esc(local)}" data-fallback="${yt}" alt="">`;
+    }
+    screen.addEventListener('error', (e) => {
+      const img = e.target;
+      if (img.tagName === 'IMG' && img.dataset.fallback) { img.src = img.dataset.fallback; delete img.dataset.fallback; }
+    }, true);
+
     function showVideo(autoplay) {
       const id = youtubeId(selected?.youtube);
       if (!id) return;
-      if (!autoplay) {
-        // 처음엔 썸네일만 보여 주고, 누르면 영상이 재생됩니다
-        screen.innerHTML = `<button type="button" class="screen-thumb" aria-label="${esc(selected.title)} 재생">
-          <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'" alt="">
+      if (!autoplay || !canEmbed) {
+        // 처음엔 썸네일만 보여 주고, 누르면 영상이 재생됩니다.
+        // 유튜브를 끼워 넣을 수 없는 곳(Claude 미리보기 등)에서는 유튜브를 새 탭으로 엽니다.
+        const inner = `${thumbImg(selected, 'big')}
           <span class="screen-play" aria-hidden="true"></span>
-          <span class="screen-caption"><b>${esc(selected.title)}</b>${esc(selected.type || '')}</span>
-        </button>`;
-        screen.querySelector('.screen-thumb').addEventListener('click', () => showVideo(true));
+          <span class="screen-caption"><b>${esc(selected.title)}</b>${esc(selected.type || '')}</span>`;
+        screen.innerHTML = canEmbed
+          ? `<button type="button" class="screen-thumb" aria-label="${esc(selected.title)} 재생">${inner}</button>`
+          : `<a class="screen-thumb" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener" aria-label="${esc(selected.title)} 유튜브에서 보기">${inner}</a>`;
+        if (canEmbed) screen.querySelector('.screen-thumb').addEventListener('click', () => showVideo(true));
         return;
       }
       screen.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}${autoplay ? '?autoplay=1' : ''}"
@@ -252,7 +267,7 @@
           .map((id) => characters.find((c) => c.id === id)?.name).filter(Boolean).join(', ');
         const sid = youtubeId(s.youtube);
         return `<li><button type="button" class="song${sid ? ' has-thumb' : ''}" data-index="${songs.indexOf(s)}" aria-pressed="${s === selected}">
-          ${sid ? `<img class="song-thumb" src="https://i.ytimg.com/vi/${sid}/mqdefault.jpg" alt="" loading="lazy">` : ''}
+          ${sid ? thumbImg(s, 'small') : ''}
           <span class="song-title">${esc(s.title)}</span><span class="song-type">${esc(s.type)}</span>
           <span class="song-who">${esc(who)}${s.credit ? ` / ${esc(s.credit)}` : ''}</span>
         </button></li>`;
@@ -271,12 +286,16 @@
       showList();
     });
 
+    list.addEventListener('error', (e) => {
+      const img = e.target;
+      if (img.tagName === 'IMG' && img.dataset.fallback) { img.src = img.dataset.fallback; delete img.dataset.fallback; }
+    }, true);
     list.addEventListener('click', (event) => {
       const button = event.target.closest('.song');
       if (!button) return;
       const { index } = button.dataset;
       selected = songs[index];
-      showVideo(true);
+      showVideo(canEmbed);
       showList();
       list.querySelector(`[data-index="${index}"]`)?.focus({ preventScroll: true });
     });
