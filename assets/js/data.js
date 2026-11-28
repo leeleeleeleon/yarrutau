@@ -17,6 +17,7 @@ window.SITE = {
   // 메인 화면 곡 목록. 맨 위 곡이 처음에 보입니다.
   // 업데이트 소식: 새 소식을 맨 위에 추가
   news: [
+    { date: '2026.11.29', text: '료오코로 키 커버 「地球の裏」를 올렸어요.' },
     { date: '2026.11.27', text: '세레니 음원을 원음설정을 마친 새 버전(VCV & CVVC)으로 바꿨어요.' },
     { date: '2026.11.27', text: '벨레인 음원을 새 버전으로 바꿨어요.' },
     { date: '2026.11.25', text: '료오코로 키, 찬사, 카프숑, 벨레인, 세레니, 나나바의 사용 규약을 올렸어요.' },
@@ -25,6 +26,7 @@ window.SITE = {
     { date: '2026.11.25', text: '야르르UTAU 공식 홈페이지 오픈! 세레니, 나나바, 어린이찬사 음원과 말 시키기(TTS)도 함께 공개했어요.' },
   ],
   songs: [
+    { title: '地球の裏', type: '커버', singers: ['ryookoro-ki'], credit: '가온누리', youtube: 'https://www.youtube.com/watch?v=Unsa-Trb_QU' },
     // { title: '곡 제목', type: '오리지널', singers: ['kapshong'], credit: '작곡 OOO', youtube: 'https://youtu.be/...' },
     // { title: '곡 제목', type: '커버', singers: ['chansa', 'bellein'], credit: '', youtube: 'https://youtu.be/...' },
   ],

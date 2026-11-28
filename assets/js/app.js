@@ -230,6 +230,16 @@
     function showVideo(autoplay) {
       const id = youtubeId(selected?.youtube);
       if (!id) return;
+      if (!autoplay) {
+        // 처음엔 썸네일만 보여 주고, 누르면 영상이 재생됩니다
+        screen.innerHTML = `<button type="button" class="screen-thumb" aria-label="${esc(selected.title)} 재생">
+          <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'" alt="">
+          <span class="screen-play" aria-hidden="true"></span>
+          <span class="screen-caption"><b>${esc(selected.title)}</b>${esc(selected.type || '')}</span>
+        </button>`;
+        screen.querySelector('.screen-thumb').addEventListener('click', () => showVideo(true));
+        return;
+      }
       screen.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}${autoplay ? '?autoplay=1' : ''}"
         title="${esc(selected.title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
@@ -240,7 +250,9 @@
       list.innerHTML = shown.map((s) => {
         const who = (s.singers || [])
           .map((id) => characters.find((c) => c.id === id)?.name).filter(Boolean).join(', ');
-        return `<li><button type="button" class="song" data-index="${songs.indexOf(s)}" aria-pressed="${s === selected}">
+        const sid = youtubeId(s.youtube);
+        return `<li><button type="button" class="song${sid ? ' has-thumb' : ''}" data-index="${songs.indexOf(s)}" aria-pressed="${s === selected}">
+          ${sid ? `<img class="song-thumb" src="https://i.ytimg.com/vi/${sid}/mqdefault.jpg" alt="" loading="lazy">` : ''}
           <span class="song-title">${esc(s.title)}</span><span class="song-type">${esc(s.type)}</span>
           <span class="song-who">${esc(who)}${s.credit ? ` / ${esc(s.credit)}` : ''}</span>
         </button></li>`;
