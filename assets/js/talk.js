@@ -155,7 +155,7 @@ function textToPhrases(text) {
     }
     cur = { moras: [] };
   };
-  const re = /([가-힣]+)|([ぁ-ゖァ-ヺー]+)|([A-Za-z']+)|([,、，;；:]+)|([.。…\n]+)|([?？]+)|([!！]+)|(\s+)|([~〜～∼]+)|(.)/g;
+  const re = /([가-힣]+)|([ぁ-ゖァ-ヺー]+)|([A-Za-z']+)|([,、，;；:—–―]+)|([.。…\n]+)|([?？]+)|([!！]+)|(\s+)|([~〜～∼]+)|(.)/g;
   let m, hasKo = false, gapNext = false;
   const push = list => list.forEach((o, i) => { const x = mk(o); if (i === 0 && gapNext && cur.moras.length) { x.gap = true; x.wordStart = true; } cur.moras.push(x); gapNext = false; });
   while ((m = re.exec(text))) {
@@ -551,7 +551,7 @@ const LINES = {
   'ryookoro-ki-whisper': ['비밀이야~', '노래를 불러보자.', 'しずかに…ね?', 'わからないほうがいいよ.'],
   kapshong: ['나는 카프숑이다.', '자비를 베풀겠노라!', 'わたしが かみだ!'],
   bellein: ['나다, 벨레인!', '진짜 제가 불러요?', 'プロデューサーに なりたかったのに!', 'うまくやりたい…'],
-  nanaba: ['안녕하세요! 나나바예요.', '같이 노래해요!', 'よろしくね!'],
+  nanaba: ['자, 다음 출품작입니다. 오늘 밤 하이라이트라고 해도 과언이 아니죠.', '더 이상 안 계십니까? 하나, 둘, 셋— 낙찰입니다! 축하드립니다.'],
   'chansa-kid': ['안녕! 나 찬사야!', '치즈 주세요!', 'いっしょに あそぼ!'],
   sereni: ['안녕하세요, 세레니예요!', '어라? 뭐 하려고 했더라...', 'がんばって うたうね!'],
 };
