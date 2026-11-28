@@ -128,7 +128,7 @@ window.SITE = {
           focus: '60%',
           sample: 'assets/audio/chansa-cv.mp3',
           voice: 'assets/voices/chansa-cv/',
-          downloads: [{ type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '19MB', file: 'chansa_CV.zip' }],
+          downloads: [{ type: 'CV', url: 'assets/downloads/chansa-cv.zip', size: '18MB', file: 'chansa_CV.zip' }],
         },
         {
           id: 'kid',
@@ -142,7 +142,7 @@ window.SITE = {
           focus: '50%',
           sample: 'assets/audio/chansa-kid.mp3',
           voice: 'assets/voices/chansa-kid/',
-          downloads: [{ type: 'VCV', url: 'assets/downloads/chansa-kid-vcv.zip', size: '48MB', file: 'chansa_kid_VCV.zip' }],
+          downloads: [{ type: 'VCV', url: 'assets/downloads/chansa-kid-vcv.zip', size: '49MB', file: 'chansa_kid_VCV.zip' }],
         },
       ],
     },
